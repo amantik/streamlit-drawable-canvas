@@ -31,6 +31,7 @@ export interface PythonArgs {
   canvasWidth: number
   canvasHeight: number
   drawingMode: string
+  // initDrawing: string
 }
 
 // TODO: Should make TS happy on the Map of selectedTool --> FabricTool
@@ -56,6 +57,7 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
     fillColor,
     strokeWidth,
     strokeColor,
+    // initDrawing,
   }: PythonArgs = args
 
   /**
@@ -90,9 +92,33 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
     const imgC = new fabric.StaticCanvas("backgroundimage-canvas", {
       enableRetinaScaling: false,
     })
-    setCanvas(c)
+
+    // console.log('init drawing')
+    // console.log(initDrawing)
+    
+    const rect = new fabric.Rect({
+      left: 10,
+      top: 20,
+      originX: "left",
+      originY: "top",
+      width: 40,
+      height: 40,
+      stroke: strokeColor,
+      strokeWidth: strokeWidth,
+      fill: fillColor,
+      transparentCorners: false,
+      selectable: false,
+      evented: false,
+      strokeUniform: true,
+      noScaleCache: false,
+      angle: 0,
+    })
+    c.add(rect)
+
+    setCanvas(c)    
     setBackgroundCanvas(imgC)
     Streamlit.setFrameHeight()
+
   }, [])
 
   /**
