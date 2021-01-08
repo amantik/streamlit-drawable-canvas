@@ -31,7 +31,7 @@ export interface PythonArgs {
   canvasWidth: number
   canvasHeight: number
   drawingMode: string
-  // initDrawing: string
+  defaultDrawing: Array<any>
 }
 
 // TODO: Should make TS happy on the Map of selectedTool --> FabricTool
@@ -57,7 +57,7 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
     fillColor,
     strokeWidth,
     strokeColor,
-    // initDrawing,
+    defaultDrawing,
   }: PythonArgs = args
 
   /**
@@ -93,27 +93,32 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       enableRetinaScaling: false,
     })
 
-    // console.log('init drawing')
-    // console.log(initDrawing)
-    
-    const rect = new fabric.Rect({
-      left: 10,
-      top: 20,
-      originX: "left",
-      originY: "top",
-      width: 40,
-      height: 40,
-      stroke: strokeColor,
-      strokeWidth: strokeWidth,
-      fill: fillColor,
-      transparentCorners: false,
-      selectable: false,
-      evented: false,
-      strokeUniform: true,
-      noScaleCache: false,
-      angle: 0,
+    defaultDrawing.forEach(drawing => {
+      switch(drawing.mode) {
+        case 'rect':
+          const rect = new fabric.Rect({
+            left: drawing.left,
+            top: drawing.top,
+            originX: "left",
+            originY: "top",
+            width: drawing.width,
+            height: drawing.height,
+            stroke: strokeColor,
+            strokeWidth: strokeWidth,
+            fill: fillColor,
+            transparentCorners: false,
+            selectable: false,
+            evented: false,
+            strokeUniform: true,
+            noScaleCache: false,
+            angle: 0,
+          })
+          c.add(rect)
+          break;
+        default:
+          break;
+      }
     })
-    c.add(rect)
 
     setCanvas(c)    
     setBackgroundCanvas(imgC)
