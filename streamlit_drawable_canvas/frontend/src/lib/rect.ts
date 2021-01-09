@@ -77,11 +77,23 @@ class RectTool extends FabricTool {
     canvas.renderAll()
   }
 
+  triggerHappyGuard = () => {
+    let canvas = this._canvas
+    const {width, height} = this.currentRect
+      if (width !== undefined && height !== undefined) {
+        if (width < 4 || height < 4 || (width < 8 && height < 8) ) {
+        canvas.remove(this.currentRect)
+        canvas.renderAll()
+      }
+    }
+  };
   onMouseUp(o: any) {
+    this.triggerHappyGuard()
     this.isMouseDown = false
   }
 
   onMouseOut(o: any) {
+    this.triggerHappyGuard()
     this.isMouseDown = false
   }
 }
