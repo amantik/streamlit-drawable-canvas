@@ -31,7 +31,7 @@ export interface PythonArgs {
   canvasWidth: number
   canvasHeight: number
   drawingMode: string
-  defaultDrawing: Array<any>
+  defaultDrawings: Array<any>
 }
 
 // TODO: Should make TS happy on the Map of selectedTool --> FabricTool
@@ -57,7 +57,7 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
     fillColor,
     strokeWidth,
     strokeColor,
-    defaultDrawing,
+    defaultDrawings,
   }: PythonArgs = args
 
   /**
@@ -93,9 +93,10 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       enableRetinaScaling: false,
     })
 
-    defaultDrawing.forEach(drawing => {
+    defaultDrawings.forEach(drawing => {
       switch(drawing.mode) {
         case 'rect':
+          // if (drawing.left !== undefined)
           const rect = new fabric.Rect({
             left: drawing.left,
             top: drawing.top,
@@ -103,9 +104,9 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
             originY: "top",
             width: drawing.width,
             height: drawing.height,
-            stroke: strokeColor,
-            strokeWidth: strokeWidth,
-            fill: fillColor,
+            stroke: drawing.strokeColor || strokeColor,
+            strokeWidth: drawing.strokeWidth || strokeWidth,
+            fill: drawing.fillColor || fillColor,
             transparentCorners: false,
             selectable: false,
             evented: false,
@@ -120,11 +121,11 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       }
     })
 
-    setCanvas(c)    
+    setCanvas(c)
     setBackgroundCanvas(imgC)
     Streamlit.setFrameHeight()
 
-  }, [])
+  }, [JSON.stringify(defaultDrawings)])
 
   /**
    * If state changed from undo/redo, update user-facing canvas

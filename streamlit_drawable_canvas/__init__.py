@@ -108,7 +108,7 @@ def st_canvas(
         canvasHeight=height,
         canvasWidth=width,
         drawingMode=drawing_mode,
-        defaultDrawing=default_drawing,
+        defaultDrawings=default_drawing,
         key=key,
         default=None,
     )
