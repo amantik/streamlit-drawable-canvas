@@ -40,6 +40,7 @@ canvas_result = st_canvas(
         'top': 10,
         'width': 40,
         'height': 40,
+        'label': 'some-label',
     }],
     key="canvas",
 )

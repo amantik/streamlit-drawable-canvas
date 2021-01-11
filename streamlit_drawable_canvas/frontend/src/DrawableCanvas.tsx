@@ -43,6 +43,39 @@ const tools: any = {
   transform: TransformTool,
 }
 
+var LabeledRect = fabric.util.createClass(fabric.Rect, {
+
+  // type: 'labeledRect',
+  // initialize can be of type function(options) or function(property, options), like for text.
+  // no other signatures allowed.
+  initialize: function(options: any) {
+    options || (options = { });
+
+    this.callSuper('initialize', options);
+    this.set('label', options.label || '');
+  },
+
+  toObject: function() {
+    return fabric.util.object.extend(this.callSuper('toObject'), {
+      label: this.get('label')
+      // label: 'test-label'
+    });
+  },
+
+  fromObject: function() {
+    return this.callSuper('fromObject');
+  },
+
+  _render: function(ctx: any) {
+    this.callSuper('_render', ctx);
+    if (this.label) {
+      ctx.font = '20px Helvetica';
+      ctx.fillStyle = '#333';
+      ctx.fillText(this.label, -this.width/2, -this.height/2 + 20);
+    }
+  }
+});
+
 /**
  * Define logic for the canvas area
  */
@@ -97,7 +130,7 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       switch(drawing.mode) {
         case 'rect':
           // if (drawing.left !== undefined)
-          const rect = new fabric.Rect({
+          const rect = new LabeledRect({
             left: drawing.left,
             top: drawing.top,
             originX: "left",
@@ -113,6 +146,7 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
             strokeUniform: true,
             noScaleCache: false,
             angle: 0,
+            label: drawing.label,
           })
           c.add(rect)
           break;
