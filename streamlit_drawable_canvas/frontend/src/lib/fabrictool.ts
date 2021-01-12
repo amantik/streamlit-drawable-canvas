@@ -11,12 +11,14 @@ export interface ConfigureCanvasProps {
  */
 abstract class FabricTool {
   protected _canvas: fabric.Canvas
+  protected _props: object
 
   /**
    * Pass Fabric canvas by reference so tools can configure it
    */
-  constructor(canvas: fabric.Canvas) {
+  constructor(canvas: fabric.Canvas, props: object = {}) {
     this._canvas = canvas
+    this._props = props
   }
 
   /**
