@@ -42,10 +42,10 @@ const tools: any = {
   rect: RectTool,
   transform: TransformTool,
 }
+// @ts-ignore
+fabric.LabeledRect = fabric.util.createClass(fabric.Rect, {
 
-var LabeledRect = fabric.util.createClass(fabric.Rect, {
-
-  // type: 'labeledRect',
+  type: 'labeledRect',
   // initialize can be of type function(options) or function(property, options), like for text.
   // no other signatures allowed.
   initialize: function(options: any) {
@@ -58,12 +58,7 @@ var LabeledRect = fabric.util.createClass(fabric.Rect, {
   toObject: function() {
     return fabric.util.object.extend(this.callSuper('toObject'), {
       label: this.get('label')
-      // label: 'test-label'
     });
-  },
-
-  fromObject: function() {
-    return this.callSuper('fromObject');
   },
 
   _render: function(ctx: any) {
@@ -74,7 +69,14 @@ var LabeledRect = fabric.util.createClass(fabric.Rect, {
       ctx.fillText(this.label, -this.width/2, -this.height/2 + 20);
     }
   }
+
 });
+
+// standard options type:
+// @ts-ignore
+fabric.LabeledRect.fromObject = function(object: any, callback: any) {
+  return fabric.Object._fromObject('LabeledRect', object, callback);
+}
 
 /**
  * Define logic for the canvas area
@@ -130,7 +132,8 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       switch(drawing.mode) {
         case 'rect':
           // if (drawing.left !== undefined)
-          const rect = new LabeledRect({
+          // @ts-ignore
+          const rect = new fabric.LabeledRect({
             left: drawing.left,
             top: drawing.top,
             originX: "left",
