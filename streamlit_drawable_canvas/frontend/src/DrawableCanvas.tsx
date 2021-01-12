@@ -127,42 +127,51 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
     const imgC = new fabric.StaticCanvas("backgroundimage-canvas", {
       enableRetinaScaling: false,
     })
-
-    defaultDrawings.forEach(drawing => {
-      switch(drawing.mode) {
-        case 'rect':
-          // if (drawing.left !== undefined)
-          // @ts-ignore
-          const rect = new fabric.LabeledRect({
-            left: drawing.left,
-            top: drawing.top,
-            originX: "left",
-            originY: "top",
-            width: drawing.width,
-            height: drawing.height,
-            stroke: drawing.strokeColor || strokeColor,
-            strokeWidth: drawing.strokeWidth || strokeWidth,
-            fill: drawing.fillColor || fillColor,
-            transparentCorners: false,
-            selectable: false,
-            evented: false,
-            strokeUniform: true,
-            noScaleCache: false,
-            angle: 0,
-            label: drawing.label,
-          })
-          c.add(rect)
-          break;
-        default:
-          break;
-      }
-    })
-
     setCanvas(c)
     setBackgroundCanvas(imgC)
     Streamlit.setFrameHeight()
+  }, [])
 
-  }, [JSON.stringify(defaultDrawings)])
+  /**
+   * Update default drawings
+   */
+  useEffect(() => {
+    if (defaultDrawings) {
+      canvas.clear()
+      defaultDrawings.forEach(drawing => {
+        switch(drawing.mode) {
+          case 'rect':
+            // @ts-ignore
+            const rect = new fabric.LabeledRect({
+              left: drawing.left,
+              top: drawing.top,
+              originX: "left",
+              originY: "top",
+              width: drawing.width,
+              height: drawing.height,
+              stroke: drawing.strokeColor || strokeColor,
+              strokeWidth: drawing.strokeWidth || strokeWidth,
+              fill: drawing.fillColor || fillColor,
+              transparentCorners: false,
+              selectable: false,
+              evented: false,
+              strokeUniform: true,
+              noScaleCache: false,
+              angle: 0,
+              label: drawing.label,
+            })
+            canvas.add(rect)
+            break;
+          default:
+            break;
+        }
+      })
+      canvas.setBackgroundColor(backgroundColor, () => {
+        canvas.renderAll()
+        saveState(canvas.toJSON())
+      })
+    }
+  }, [canvas, JSON.stringify(defaultDrawings), saveState])
 
   /**
    * If state changed from undo/redo, update user-facing canvas

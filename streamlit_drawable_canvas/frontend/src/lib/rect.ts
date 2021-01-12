@@ -6,7 +6,8 @@ class RectTool extends FabricTool {
   fillColor: string = "#ffffff"
   strokeWidth: number = 10
   strokeColor: string = "#ffffff"
-  currentRect: fabric.Rect = new fabric.Rect()
+  // @ts-ignore
+  currentRect: any = new fabric.LabeledRect()
   currentStartX: number = 0
   currentStartY: number = 0
 
@@ -41,7 +42,8 @@ class RectTool extends FabricTool {
     let pointer = canvas.getPointer(o.e)
     this.currentStartX = pointer.x
     this.currentStartY = pointer.y
-    this.currentRect = new fabric.Rect({
+    // @ts-ignore
+    this.currentRect = new fabric.LabeledRect({
       left: this.currentStartX,
       top: this.currentStartY,
       originX: "left",

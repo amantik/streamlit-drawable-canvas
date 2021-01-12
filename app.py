@@ -15,6 +15,7 @@ Draw on the canvas, get the drawings back to Streamlit!
 st.sidebar.header("Configuration")
 
 # Specify canvas parameters in application
+box_left = st.sidebar.slider("Box left: ", 10, 50, 10, 10)
 stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
 stroke_color = st.sidebar.color_picker("Stroke color hex: ")
 bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
@@ -36,7 +37,7 @@ canvas_result = st_canvas(
     drawing_mode=drawing_mode,
     default_drawing=[{
         'mode': 'rect',
-        'left': 10,
+        'left': box_left,
         'top': 10,
         'width': 40,
         'height': 40,
