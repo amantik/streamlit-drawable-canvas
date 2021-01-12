@@ -25,7 +25,7 @@ class RectTool extends FabricTool {
       if (o.label) {
         // @ts-ignore
         const intLabel = parseInt(o.label)
-        if (intLabel) {
+        if (Number.isInteger(intLabel)) {
          this.lastNumericLabel = Math.max(this.lastNumericLabel, intLabel+1)
         }
       }
