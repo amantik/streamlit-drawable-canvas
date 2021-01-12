@@ -226,7 +226,7 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       cleanupToolEvents()
       canvas.off("mouse:up")
     }
-  }, [canvas, strokeWidth, strokeColor, fillColor, drawingMode, saveState])
+  }, [canvas, strokeWidth, strokeColor, fillColor, drawingMode, JSON.stringify(defaultDrawings), saveState])
 
   /**
    * Render canvas w/ toolbar

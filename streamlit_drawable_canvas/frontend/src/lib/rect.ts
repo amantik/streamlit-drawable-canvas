@@ -10,6 +10,7 @@ class RectTool extends FabricTool {
   currentRect: any = new fabric.LabeledRect()
   currentStartX: number = 0
   currentStartY: number = 0
+  lastNumericLabel: number = 0
 
   configureCanvas({
     strokeWidth,
@@ -19,6 +20,16 @@ class RectTool extends FabricTool {
     this._canvas.isDrawingMode = false
     this._canvas.selection = false
     this._canvas.forEachObject((o) => (o.selectable = o.evented = false))
+    this._canvas.forEachObject((o) => {
+      // @ts-ignore
+      if (o.label) {
+        // @ts-ignore
+        const intLabel = parseInt(o.label)
+        if (intLabel) {
+         this.lastNumericLabel = Math.max(this.lastNumericLabel, intLabel+1)
+        }
+      }
+    })
 
     this.strokeWidth = strokeWidth
     this.strokeColor = strokeColor
@@ -59,7 +70,9 @@ class RectTool extends FabricTool {
       strokeUniform: true,
       noScaleCache: false,
       angle: 0,
+      label: `${this.lastNumericLabel}`
     })
+    this.lastNumericLabel += 1
     canvas.add(this.currentRect)
   }
 
