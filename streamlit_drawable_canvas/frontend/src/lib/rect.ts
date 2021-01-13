@@ -99,6 +99,7 @@ class RectTool extends FabricTool {
         if (width !== undefined && height !== undefined) {
           if (width < 4 || height < 4 || (width < 8 && height < 8) ) {
             this.lastNumericLabel -= 1
+            if (this.lastNumericLabel < 0) this.lastNumericLabel = 0
             canvas.remove(this.currentRect)
             this.currentRect = null
             canvas.renderAll()
