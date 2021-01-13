@@ -94,11 +94,15 @@ class RectTool extends FabricTool {
 
   triggerHappyGuard = () => {
     let canvas = this._canvas
-    const {width, height} = this.currentRect
-      if (width !== undefined && height !== undefined) {
-        if (width < 4 || height < 4 || (width < 8 && height < 8) ) {
-        canvas.remove(this.currentRect)
-        canvas.renderAll()
+    if (this.currentRect != null) {
+      const {width, height} = this.currentRect
+        if (width !== undefined && height !== undefined) {
+          if (width < 4 || height < 4 || (width < 8 && height < 8) ) {
+            this.lastNumericLabel -= 1
+            canvas.remove(this.currentRect)
+            this.currentRect = null
+            canvas.renderAll()
+        }
       }
     }
   };
