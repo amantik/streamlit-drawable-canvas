@@ -42,7 +42,15 @@ canvas_result = st_canvas(
         'width': 40,
         'height': 40,
         'label': 'some-label',
-    }],
+     },{
+        'mode': 'rect',
+        'left': box_left+200,
+        'top': 60,
+        'width': 60,
+        'height': 60,
+        'label': 'other-label',
+     }
+    ],
     key="canvas",
 )
 

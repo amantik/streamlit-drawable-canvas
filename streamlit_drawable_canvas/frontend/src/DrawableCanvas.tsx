@@ -221,10 +221,15 @@ const DrawableCanvas = ({ args }: ComponentProps) => {
       saveState(canvas.toJSON())
     })
 
+    canvas.on("mouse:dblclick", () => {
+      saveState(canvas.toJSON())
+    })
+
     // Cleanup tool + send data to Streamlit events
     return () => {
       cleanupToolEvents()
       canvas.off("mouse:up")
+      canvas.off("mouse:dblclick")
     }
   }, [canvas, strokeWidth, strokeColor, fillColor, drawingMode, JSON.stringify(defaultDrawings), saveState])
 
