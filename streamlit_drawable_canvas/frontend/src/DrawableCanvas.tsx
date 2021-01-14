@@ -64,9 +64,9 @@ fabric.LabeledRect = fabric.util.createClass(fabric.Rect, {
   _render: function(ctx: any) {
     this.callSuper('_render', ctx);
     if (this.label) {
-      ctx.font = '15px Verdana';
-      ctx.fillStyle = '#000';
-      ctx.fillText(this.label, -this.width/2, -this.height/2 - this.strokeWidth - 2 );
+      ctx.font = '20px Verdana';
+      ctx.fillStyle = '#008';
+      ctx.fillText(this.label, this.width/2 + this.strokeWidth, this.height/2 + 3);
     }
   }
 
